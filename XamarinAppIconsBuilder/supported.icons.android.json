@@ -1,0 +1,52 @@
+[
+  {
+    "Width": 72,
+    "Height": 72,
+    "FileName": "icon.png"
+  },
+  {
+    "Width": 162,
+    "Height": 162,
+    "FileName": "launcher_foreground.png"
+  },
+  {
+    "Width": 48,
+    "Height": 48,
+    "FileName": "icon.png"
+  },
+  {
+    "Width": 108,
+    "Height": 108,
+    "FileName": "launcher_foreground.png"
+  },
+  {
+    "Width": 96,
+    "Height": 96,
+    "FileName": "icon.png"
+  },
+  {
+    "Width": 216,
+    "Height": 216,
+    "FileName": "launcher_foreground.png"
+  },
+  {
+    "Width": 144,
+    "Height": 144,
+    "FileName": "icon.png"
+  },
+  {
+    "Width": 324,
+    "Height": 324,
+    "FileName": "launcher_foreground.png"
+  },
+  {
+    "Width": 192,
+    "Height": 192,
+    "FileName": "icon.png"
+  },
+  {
+    "Width": 432,
+    "Height": 432,
+    "FileName": "launcher_foreground.png"
+  }
+]

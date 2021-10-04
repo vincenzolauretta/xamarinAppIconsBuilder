@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XamarinAppIconsBuilder"
+        xmlns:viewModels="clr-namespace:XamarinAppIconsBuilder.ViewModels"
         mc:Ignorable="d"
         Title="Xamarin App Icons Builder" Height="450" Width="800">
     <Grid>
@@ -44,23 +45,24 @@
 
                         </StackPanel>
                         <StackPanel>
-                            <GroupBox Header="Preview">
+                            <GroupBox Header="Preview Logo">
                                 <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
                                     <Grid Width="128" Height="128">
                                         <Rectangle Fill="#FFDADADA"/>
-                                        <Image/>
+                                        <Image Source="{Binding LogoFilePath}" Stretch="Uniform"/>
                                     </Grid>
                                 </StackPanel>
                             </GroupBox>
                         </StackPanel>
 
                     </StackPanel>
+                    <Button Content="Generate Icons" HorizontalAlignment="Stretch" Margin="10,10,10,10" Command="{Binding GenerateIconsCommand}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <GroupBox Header="Android" Grid.Column="0">
+                        <GroupBox Header="Android" Grid.Column="0" Margin="0, 0, 5, 0">
                             <ItemsControl ItemsSource="{Binding AndroidIcons}" Margin="10">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -69,15 +71,26 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Margin="3" Background="LightGray">
-                                            <Image Source="{Binding}" Height="100" Stretch="Uniform" Margin="2"/>
+                                        <Grid Margin="5" ToolTip="{Binding FilePath}">
+                                            <StackPanel>
+                                                <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
+                                                    <Image Source="{Binding FilePath}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                </Grid>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Label Content="{Binding Width}" Margin="0" Padding="0"/>
+                                                    <Label Content="x" Margin="0" Padding="0"/>
+                                                    <Label Content="{Binding Height}" Margin="0" Padding="0"/>
+                                                    <Label Content=" " Margin="0" Padding="0"/>
+                                                </StackPanel>
+                                                <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                                            </StackPanel>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </GroupBox>
-                        <GroupBox Header="iOS" Grid.Column="1">
-                            <ItemsControl ItemsSource="{Binding IosIcons}" Margin="10">
+                        <GroupBox Header="Preview Android" Grid.Column="1" Margin="5, 0, 0, 0">
+                            <ItemsControl ItemsSource="{Binding PreviewAndroidIcons}" Margin="10">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel/>
@@ -85,8 +98,19 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Margin="3" Background="LightGray">
-                                            <Image Source="{Binding}" Height="100" Stretch="Uniform" Margin="2"/>
+                                        <Grid Margin="5" ToolTip="{Binding FilePath}">
+                                            <StackPanel>
+                                                <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
+                                                    <Image Source="{Binding ImageBytes}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                </Grid>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Label Content="{Binding Width}" Margin="0" Padding="0"/>
+                                                    <Label Content="x" Margin="0" Padding="0"/>
+                                                    <Label Content="{Binding Height}" Margin="0" Padding="0"/>
+                                                    <Label Content=" " Margin="0" Padding="0"/>
+                                                </StackPanel>
+                                                <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                                            </StackPanel>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -98,7 +122,67 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <GroupBox Header="Windows Universal" Grid.Column="0">
+                        <GroupBox Header="iOS" Grid.Column="0" Margin="0, 0, 5, 0">
+                            <ItemsControl ItemsSource="{Binding IosIcons}" Margin="10">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="5" ToolTip="{Binding FilePath}">
+                                            <StackPanel>
+                                                <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
+                                                    <Image Source="{Binding FilePath}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                </Grid>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Label Content="{Binding Width}" Margin="0" Padding="0"/>
+                                                    <Label Content="x" Margin="0" Padding="0"/>
+                                                    <Label Content="{Binding Height}" Margin="0" Padding="0"/>
+                                                    <Label Content=" " Margin="0" Padding="0"/>
+                                                </StackPanel>
+                                                <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                        <GroupBox Header="Preview iOS" Grid.Column="1" Margin="5, 0, 0, 0">
+                            <ItemsControl ItemsSource="{Binding PreviewIosIcons}" Margin="10">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="5" ToolTip="{Binding FilePath}">
+                                            <StackPanel>
+                                                <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
+                                                    <Image Source="{Binding ImageBytes}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                </Grid>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Label Content="{Binding Width}" Margin="0" Padding="0"/>
+                                                    <Label Content="x" Margin="0" Padding="0"/>
+                                                    <Label Content="{Binding Height}" Margin="0" Padding="0"/>
+                                                    <Label Content=" " Margin="0" Padding="0"/>
+                                                </StackPanel>
+                                                <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Header="Windows Universal" Grid.Column="0" Margin="0, 0, 5, 0">
                             <ItemsControl ItemsSource="{Binding WindowsUniversalIcons}" Margin="10">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -107,8 +191,46 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Margin="3" Background="LightGray">
-                                            <Image Source="{Binding}" Height="100" Stretch="Uniform" Margin="2"/>
+                                        <Grid Margin="5" ToolTip="{Binding FilePath}">
+                                            <StackPanel>
+                                                <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
+                                                    <Image Source="{Binding FilePath}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                </Grid>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Label Content="{Binding Width}" Margin="0" Padding="0"/>
+                                                    <Label Content="x" Margin="0" Padding="0"/>
+                                                    <Label Content="{Binding Height}" Margin="0" Padding="0"/>
+                                                    <Label Content=" " Margin="0" Padding="0"/>
+                                                </StackPanel>
+                                                <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                        <GroupBox Header="Preview Windows Universal" Grid.Column="1" Margin="5, 0, 0, 0">
+                            <ItemsControl ItemsSource="{Binding PreviewWindowsUniversalIcons}" Margin="10">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="5" ToolTip="{Binding FilePath}">
+                                            <StackPanel>
+                                                <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
+                                                    <Image Source="{Binding ImageBytes}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                </Grid>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Label Content="{Binding Width}" Margin="0" Padding="0"/>
+                                                    <Label Content="x" Margin="0" Padding="0"/>
+                                                    <Label Content="{Binding Height}" Margin="0" Padding="0"/>
+                                                    <Label Content=" " Margin="0" Padding="0"/>
+                                                </StackPanel>
+                                                <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                                            </StackPanel>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

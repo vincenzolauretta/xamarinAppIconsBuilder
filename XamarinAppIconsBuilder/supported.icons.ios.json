@@ -1,0 +1,67 @@
+[
+  {
+    "Width": 1024,
+    "Height": 1024,
+    "FileName": "Icon1024.png"
+  },
+  {
+    "Width": 120,
+    "Height": 120,
+    "FileName": "Icon120.png"
+  },
+  {
+    "Width": 152,
+    "Height": 152,
+    "FileName": "Icon152.png"
+  },
+  {
+    "Width": 167,
+    "Height": 167,
+    "FileName": "Icon167.png"
+  },
+  {
+    "Width": 180,
+    "Height": 180,
+    "FileName": "Icon180.png"
+  },
+  {
+    "Width": 20,
+    "Height": 20,
+    "FileName": "Icon20.png"
+  },
+  {
+    "Width": 29,
+    "Height": 29,
+    "FileName": "Icon29.png"
+  },
+  {
+    "Width": 40,
+    "Height": 40,
+    "FileName": "Icon40.png"
+  },
+  {
+    "Width": 58,
+    "Height": 58,
+    "FileName": "Icon58.png"
+  },
+  {
+    "Width": 60,
+    "Height": 60,
+    "FileName": "Icon60.png"
+  },
+  {
+    "Width": 76,
+    "Height": 76,
+    "FileName": "Icon76.png"
+  },
+  {
+    "Width": 80,
+    "Height": 80,
+    "FileName": "Icon80.png"
+  },
+  {
+    "Width": 87,
+    "Height": 87,
+    "FileName": "Icon87.png"
+  }
+]

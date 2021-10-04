@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using XamarinAppIconsBuilder.Components;
+using XamarinAppIconsBuilder.Models;
 
 namespace XamarinAppIconsBuilder.ViewModels
 {
@@ -54,8 +56,8 @@ namespace XamarinAppIconsBuilder.ViewModels
             }
         }
 
-        ObservableCollection<string> _AndroidIcons;
-        public ObservableCollection<string> AndroidIcons
+        ObservableCollection<IconFileViewModel> _AndroidIcons;
+        public ObservableCollection<IconFileViewModel> AndroidIcons
         {
             get { return _AndroidIcons; }
             set
@@ -67,9 +69,21 @@ namespace XamarinAppIconsBuilder.ViewModels
                 }
             }
         }
-
-        ObservableCollection<string> _IosIcons;
-        public ObservableCollection<string> IosIcons
+        ObservableCollection<IconFileViewModel> _PreviewAndroidIcons;
+        public ObservableCollection<IconFileViewModel> PreviewAndroidIcons
+        {
+            get { return _PreviewAndroidIcons; }
+            set
+            {
+                if (_PreviewAndroidIcons != value)
+                {
+                    _PreviewAndroidIcons = value;
+                    OnPropertyChanged(nameof(PreviewAndroidIcons));
+                }
+            }
+        }
+        ObservableCollection<IconFileViewModel> _IosIcons;
+        public ObservableCollection<IconFileViewModel> IosIcons
         {
             get { return _IosIcons; }
             set
@@ -81,9 +95,21 @@ namespace XamarinAppIconsBuilder.ViewModels
                 }
             }
         }
-
-        ObservableCollection<string> _WindowsUniversalIcons;
-        public ObservableCollection<string> WindowsUniversalIcons
+        ObservableCollection<IconFileViewModel> _PreviewIosIcons;
+        public ObservableCollection<IconFileViewModel> PreviewIosIcons
+        {
+            get { return _PreviewIosIcons; }
+            set
+            {
+                if (_PreviewIosIcons != value)
+                {
+                    _PreviewIosIcons = value;
+                    OnPropertyChanged(nameof(PreviewIosIcons));
+                }
+            }
+        }
+        ObservableCollection<IconFileViewModel> _WindowsUniversalIcons;
+        public ObservableCollection<IconFileViewModel> WindowsUniversalIcons
         {
             get { return _WindowsUniversalIcons; }
             set
@@ -95,7 +121,34 @@ namespace XamarinAppIconsBuilder.ViewModels
                 }
             }
         }
+        ObservableCollection<IconFileViewModel> _PreviewWindowsUniversalIcons;
+        public ObservableCollection<IconFileViewModel> PreviewWindowsUniversalIcons
+        {
+            get { return _PreviewWindowsUniversalIcons; }
+            set
+            {
+                if (_PreviewWindowsUniversalIcons != value)
+                {
+                    _PreviewWindowsUniversalIcons = value;
+                    OnPropertyChanged(nameof(PreviewWindowsUniversalIcons));
+                }
+            }
+        }
 
+
+        private List<SupportedIconItemModel> _supportedIconsIos;
+        private List<SupportedIconItemModel> _supportedIconsAndroid;
+        private List<SupportedIconItemModel> _supportedIconsWindowsUniversal;
+
+        public AppViewModel()
+        {
+            Task.Run(() =>
+            {
+                _supportedIconsIos = JsonConvert.DeserializeObject<List<SupportedIconItemModel>>(System.IO.File.ReadAllText("supported.icons.ios.json"));
+                _supportedIconsAndroid = JsonConvert.DeserializeObject<List<SupportedIconItemModel>>(System.IO.File.ReadAllText("supported.icons.android.json"));
+                _supportedIconsWindowsUniversal = JsonConvert.DeserializeObject<List<SupportedIconItemModel>>(System.IO.File.ReadAllText("supported.icons.windows.json"));
+            });
+        }
 
 
         RelayCommand _BrowseLogoCommand;
@@ -125,6 +178,8 @@ namespace XamarinAppIconsBuilder.ViewModels
                 {
                     _BrowseXamarinSolutionCommand = new RelayCommand(async param =>
                     {
+                        LogoFilePath = @"U:\SOFTWARE\HackerspaceApp\resources\logo_transparent_for_icons.png";
+
                         FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
 
                         DialogResult result = folderBrowserDialog1.ShowDialog();
@@ -136,15 +191,15 @@ namespace XamarinAppIconsBuilder.ViewModels
 
                             var iosIcons = await scanner.GetIosIcons();
 
-                            IosIcons = new ObservableCollection<string>(iosIcons);
+                            IosIcons = new ObservableCollection<IconFileViewModel>(iosIcons.Select(z => new IconFileViewModel(z)));
 
                             var androidIcons = await scanner.GetAndroidIcons();
 
-                            AndroidIcons = new ObservableCollection<string>(androidIcons);
+                            AndroidIcons = new ObservableCollection<IconFileViewModel>(androidIcons.Select(z => new IconFileViewModel(z)));
 
                             var windowsUniversalIcons = await scanner.GetWindowsUniversalIcons();
 
-                            WindowsUniversalIcons = new ObservableCollection<string>(windowsUniversalIcons);
+                            WindowsUniversalIcons = new ObservableCollection<IconFileViewModel>(windowsUniversalIcons.Select(z => new IconFileViewModel(z)));
                         }
 
 
@@ -152,6 +207,24 @@ namespace XamarinAppIconsBuilder.ViewModels
                     }, param => true);
                 }
                 return _BrowseXamarinSolutionCommand;
+            }
+        }
+
+
+        RelayCommand _GenerateIconsCommand;
+        public ICommand GenerateIconsCommand
+        {
+            get
+            {
+                if (_GenerateIconsCommand == null)
+                {
+                    _GenerateIconsCommand = new RelayCommand(param =>
+                    {
+
+
+                    }, param => true);
+                }
+                return _GenerateIconsCommand;
             }
         }
 
