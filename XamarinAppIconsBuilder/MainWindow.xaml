@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:XamarinAppIconsBuilder"
         xmlns:viewModels="clr-namespace:XamarinAppIconsBuilder.ViewModels"
         mc:Ignorable="d"
-        Title="Xamarin App Icons Builder" Height="450" Width="800">
+        Title="Xamarin App Icons Builder" Height="450" Width="1000">
     <Grid>
         <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid Margin="10,10,10,10">
@@ -75,6 +75,7 @@
                                             <StackPanel>
                                                 <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
                                                     <Image Source="{Binding FilePath}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                    <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Command="{Binding OpenParentFolderCommand}" CommandParameter="{Binding FilePath}"/>
                                                 </Grid>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <Label Content="{Binding Width}" Margin="0" Padding="0"/>
@@ -116,6 +117,17 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </GroupBox>
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
+                            <CheckBox Background="White" Content="Use suggested size" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding UseSuggestedSizeAndroid}"/>
+                            <Label Content="Icon" Padding="10,0,5,0" Background="White"/>
+                            <Label Content="{Binding IconSizePercentAndroid}" Padding="0,0,0,0" Background="White"/>
+                            <Label Content="%" Padding="0,0,5,0" Background="White"/>
+                            <Slider Width="120" Maximum="100" Minimum="10" SmallChange="1" Value="{Binding IconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
+                            <Label Content="Launcher" Padding="10,0,5,0" Background="White"/>
+                            <Label Content="{Binding LauncherIconSizePercentAndroid}" Padding="0,0,0,0" Background="White"/>
+                            <Label Content="%" Padding="0,0,5,0" Background="White"/>
+                            <Slider Width="120" Maximum="100" Minimum="10" SmallChange="1" Value="{Binding LauncherIconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
+                        </StackPanel>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -135,6 +147,7 @@
                                             <StackPanel>
                                                 <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
                                                     <Image Source="{Binding FilePath}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                    <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Command="{Binding OpenParentFolderCommand}" CommandParameter="{Binding FilePath}"/>
                                                 </Grid>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <Label Content="{Binding Width}" Margin="0" Padding="0"/>
@@ -195,6 +208,7 @@
                                             <StackPanel>
                                                 <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
                                                     <Image Source="{Binding FilePath}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                    <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Command="{Binding OpenParentFolderCommand}" CommandParameter="{Binding FilePath}"/>
                                                 </Grid>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <Label Content="{Binding Width}" Margin="0" Padding="0"/>

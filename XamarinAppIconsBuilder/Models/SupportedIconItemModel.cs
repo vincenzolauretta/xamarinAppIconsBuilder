@@ -11,5 +11,6 @@ namespace XamarinAppIconsBuilder.Models
         public int Width { get; set; }
         public int Height { get; set; }
         public string FileName { get; set; }
+        public int SuggestedSize { get; set; }
     }
 }

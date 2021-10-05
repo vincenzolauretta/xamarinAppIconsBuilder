@@ -2,51 +2,61 @@
   {
     "Width": 72,
     "Height": 72,
-    "FileName": "icon.png"
+    "FileName": "icon.png",
+    "SuggestedSize": 66
   },
   {
     "Width": 162,
     "Height": 162,
-    "FileName": "launcher_foreground.png"
+    "FileName": "launcher_foreground.png",
+    "SuggestedSize": 84
   },
   {
     "Width": 48,
     "Height": 48,
-    "FileName": "icon.png"
+    "FileName": "icon.png",
+    "SuggestedSize": 44
   },
   {
     "Width": 108,
     "Height": 108,
-    "FileName": "launcher_foreground.png"
+    "FileName": "launcher_foreground.png",
+    "SuggestedSize": 56
   },
   {
     "Width": 96,
     "Height": 96,
-    "FileName": "icon.png"
+    "FileName": "icon.png",
+    "SuggestedSize": 88
   },
   {
     "Width": 216,
     "Height": 216,
-    "FileName": "launcher_foreground.png"
+    "FileName": "launcher_foreground.png",
+    "SuggestedSize": 112
   },
   {
     "Width": 144,
     "Height": 144,
-    "FileName": "icon.png"
+    "FileName": "icon.png",
+    "SuggestedSize": 132
   },
   {
     "Width": 324,
     "Height": 324,
-    "FileName": "launcher_foreground.png"
+    "FileName": "launcher_foreground.png",
+    "SuggestedSize": 168
   },
   {
     "Width": 192,
     "Height": 192,
-    "FileName": "icon.png"
+    "FileName": "icon.png",
+    "SuggestedSize": 176
   },
   {
     "Width": 432,
     "Height": 432,
-    "FileName": "launcher_foreground.png"
+    "FileName": "launcher_foreground.png",
+    "SuggestedSize": 224
   }
 ]
