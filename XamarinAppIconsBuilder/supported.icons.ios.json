@@ -2,66 +2,79 @@
   {
     "Width": 1024,
     "Height": 1024,
-    "FileName": "Icon1024.png"
+    "FileName": "Icon1024.png",
+    "SuggestedSize": 616
   },
   {
     "Width": 120,
     "Height": 120,
-    "FileName": "Icon120.png"
+    "FileName": "Icon120.png",
+    "SuggestedSize": 72
   },
   {
     "Width": 152,
     "Height": 152,
-    "FileName": "Icon152.png"
+    "FileName": "Icon152.png",
+    "SuggestedSize": 92
   },
   {
     "Width": 167,
     "Height": 167,
-    "FileName": "Icon167.png"
+    "FileName": "Icon167.png",
+    "SuggestedSize": 101
   },
   {
     "Width": 180,
     "Height": 180,
-    "FileName": "Icon180.png"
+    "FileName": "Icon180.png",
+    "SuggestedSize": 108
   },
   {
     "Width": 20,
     "Height": 20,
-    "FileName": "Icon20.png"
+    "FileName": "Icon20.png",
+    "SuggestedSize": 14
   },
   {
     "Width": 29,
     "Height": 29,
-    "FileName": "Icon29.png"
+    "FileName": "Icon29.png",
+    "SuggestedSize": 23
   },
   {
     "Width": 40,
     "Height": 40,
-    "FileName": "Icon40.png"
+    "FileName": "Icon40.png",
+    "SuggestedSize": 28
   },
   {
     "Width": 58,
     "Height": 58,
-    "FileName": "Icon58.png"
+    "FileName": "Icon58.png",
+    "SuggestedSize": 40
   },
   {
     "Width": 60,
     "Height": 60,
-    "FileName": "Icon60.png"
+    "FileName": "Icon60.png",
+    "SuggestedSize": 42
   },
   {
     "Width": 76,
     "Height": 76,
-    "FileName": "Icon76.png"
+    "FileName": "Icon76.png",
+    "SuggestedSize": 46
   },
   {
     "Width": 80,
     "Height": 80,
-    "FileName": "Icon80.png"
+    "FileName": "Icon80.png",
+    "SuggestedSize": 48
   },
   {
     "Width": 87,
     "Height": 87,
-    "FileName": "Icon87.png"
+    "FileName": "Icon87.png",
+    "SuggestedSize": 59
   }
 ]

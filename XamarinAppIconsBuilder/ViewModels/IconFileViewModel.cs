@@ -11,6 +11,21 @@ namespace XamarinAppIconsBuilder.ViewModels
 {
     public class IconFileViewModel : BaseViewModel
     {
+        bool _IsUnsupported;
+        public bool IsUnsupported
+        {
+            get { return _IsUnsupported; }
+            set
+            {
+                if (_IsUnsupported != value)
+                {
+                    _IsUnsupported = value;
+                    OnPropertyChanged(nameof(IsUnsupported));
+                }
+            }
+        }
+
+
         int _Width;
         public int Width
         {

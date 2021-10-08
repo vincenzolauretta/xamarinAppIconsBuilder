@@ -65,7 +65,8 @@ namespace XamarinAppIconsBuilder.Components
         {
             return await Task.Run(async () =>
             {
-                var assetsFolders = Directory.GetDirectories(_xamarinSolutionRootPath, "*AppIcon.appiconset*", SearchOption.AllDirectories);
+                var assetsFolders = Directory.GetDirectories(_xamarinSolutionRootPath, "*AppIcon.appiconset*", SearchOption.AllDirectories)
+                .Where(z => !z.Contains("\\obj\\"));
 
                 List<string> icons = new List<string>();
 

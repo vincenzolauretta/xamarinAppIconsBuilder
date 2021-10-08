@@ -164,8 +164,6 @@ namespace XamarinAppIconsBuilder.ViewModels
                 }
             }
         }
-
-
         int _LauncherIconSizePercentAndroid = 51;
         public int LauncherIconSizePercentAndroid
         {
@@ -193,6 +191,47 @@ namespace XamarinAppIconsBuilder.ViewModels
             }
         }
 
+        bool _UseSuggestedSizeIos;
+        public bool UseSuggestedSizeIos
+        {
+            get { return _UseSuggestedSizeIos; }
+            set
+            {
+                if (_UseSuggestedSizeIos != value)
+                {
+                    _UseSuggestedSizeIos = value;
+                    OnPropertyChanged(nameof(UseSuggestedSizeIos));
+                    SizeSliderEnabledIos = !value;
+                }
+            }
+        }
+        bool _SizeSliderEnabledIos;
+        public bool SizeSliderEnabledIos
+        {
+            get { return _SizeSliderEnabledIos; }
+            set
+            {
+                if (_SizeSliderEnabledIos != value)
+                {
+                    _SizeSliderEnabledIos = value;
+                    OnPropertyChanged(nameof(SizeSliderEnabledIos));
+                }
+            }
+        }
+        int _IconSizePercentIos = 70;
+        public int IconSizePercentIos
+        {
+            get { return _IconSizePercentIos; }
+            set
+            {
+                if (_IconSizePercentIos != value)
+                {
+                    _IconSizePercentIos = value;
+                    OnPropertyChanged(nameof(IconSizePercentIos));
+                }
+            }
+        }
+
 
 
         private List<SupportedIconItemModel> _supportedIconsIos;
@@ -202,6 +241,7 @@ namespace XamarinAppIconsBuilder.ViewModels
         public AppViewModel()
         {
             UseSuggestedSizeAndroid = true;
+            UseSuggestedSizeIos = true;
 
             Task.Run(() =>
             {
@@ -290,83 +330,17 @@ namespace XamarinAppIconsBuilder.ViewModels
                 {
                     _GenerateIconsCommand = new RelayCommand(param =>
                     {
-                        if (AndroidIcons == null)
-                            return;
-
-                        PreviewAndroidIcons = new ObservableCollection<IconFileViewModel>();
-
-                        foreach (var icon in AndroidIcons)
+                        if (AndroidIcons != null)
                         {
-                            var supportedIconConfig = _supportedIconsAndroid.FirstOrDefault(z => z.FileName == icon.FileName && z.Width == icon.Width && z.Height == icon.Height);
-
-                            if (supportedIconConfig == null)
-                            {
-                                PreviewAndroidIcons.Add(new IconFileViewModel()
-                                {
-                                    Width = icon.Width,
-                                    Height = icon.Height,
-                                    ImageBytes = System.IO.File.ReadAllBytes(icon.FilePath)
-                                });
-
-                                continue;
-                            }
-                            else
-                            {
-                                var bmp = new Bitmap(icon.Width, icon.Height);
-
-                                using (var logo = new Bitmap(LogoFilePath))
-                                {
-                                    FillBackgroundWithColor(ref bmp, LogoBackgroundColor);
-
-                                    if (UseSuggestedSizeAndroid && supportedIconConfig.SuggestedSize > 0)
-                                    {
-                                        var scaledImage = ScaleImage(logo, supportedIconConfig.SuggestedSize, supportedIconConfig.SuggestedSize);
-                                        var percent = supportedIconConfig.SuggestedSize * 100 / bmp.Height;
-
-                                        int width = scaledImage.Width;
-                                        int height = scaledImage.Height;
-
-                                        int x = ((bmp.Width - width) / 2);
-                                        int y = ((bmp.Height - height) / 2);
-
-                                        CopyRegionIntoImage(logo, new Rectangle(0, 0, logo.Width, logo.Height), ref bmp, new Rectangle(x, y, width, height));
-
-                                        PreviewAndroidIcons.Add(new IconFileViewModel()
-                                        {
-                                            Width = icon.Width,
-                                            Height = icon.Height,
-                                            ImageBytes = ImageToByte(bmp),
-                                            FileName = icon.FileName
-                                        });
-                                    }
-                                    else // use slider values
-                                    {
-                                        var percent = icon.FileName.Contains("launcher") ? LauncherIconSizePercentAndroid : IconSizePercentAndroid;
-
-                                        int sliderSize = (int)((bmp.Height / 100.0f) * percent);
-                                        var scaledImage2 = ScaleImage(logo, sliderSize, sliderSize);
-
-                                        int width = scaledImage2.Width;
-                                        int height = scaledImage2.Height;
-
-                                        int x = ((bmp.Width - width) / 2);
-                                        int y = ((bmp.Height - height) / 2);
-
-                                        CopyRegionIntoImage(logo, new Rectangle(0, 0, logo.Width, logo.Height), ref bmp, new Rectangle(x, y, width, height));
-
-                                        PreviewAndroidIcons.Add(new IconFileViewModel()
-                                        {
-                                            Width = icon.Width,
-                                            Height = icon.Height,
-                                            ImageBytes = ImageToByte(bmp),
-                                            FileName = icon.FileName
-                                        });
-                                    }
-                                }
+                            PreviewAndroidIcons = new ObservableCollection<IconFileViewModel>();
+                            this.GenerateIcons(AndroidIcons, _supportedIconsAndroid, PreviewAndroidIcons, UseSuggestedSizeAndroid, IconSizePercentAndroid, LauncherIconSizePercentAndroid);
+                        }
 
 
-                            }
-
+                        if (IosIcons != null)
+                        {
+                            PreviewIosIcons = new ObservableCollection<IconFileViewModel>();
+                            this.GenerateIcons(IosIcons, _supportedIconsIos, PreviewIosIcons, UseSuggestedSizeIos, IconSizePercentIos, IconSizePercentIos);
                         }
 
                         // save to disk
@@ -374,12 +348,92 @@ namespace XamarinAppIconsBuilder.ViewModels
                         //Directory.CreateDirectory(outputPath);
                         //foreach (var item in PreviewAndroidIcons)
                         //{
-                        //    System.IO.File.WriteAllBytes($"{outputPath}\\{item.FileName}", item.ImageBytes);
+                        //    if (!item.IsUnsupported && !string.IsNullOrWhiteSpace(item.FilePath))
+                        //    {
+                        //        System.IO.File.WriteAllBytes($"{outputPath}\\{item.FileName}", item.ImageBytes);
+                        //    }
                         //}
 
                     }, param => true);
                 }
                 return _GenerateIconsCommand;
+            }
+        }
+        private void GenerateIcons(ObservableCollection<IconFileViewModel> icons, List<SupportedIconItemModel> supportedIcons, ObservableCollection<IconFileViewModel> previewIcons, bool useSuggestedSize, int iconSizePercent, int launcherSizePercent)
+        {
+            foreach (var icon in icons)
+            {
+                var supportedIconConfig = supportedIcons.FirstOrDefault(z => z.FileName == icon.FileName && z.Width == icon.Width && z.Height == icon.Height);
+
+                if (supportedIconConfig == null)
+                {
+                    previewIcons.Add(new IconFileViewModel()
+                    {
+                        Width = icon.Width,
+                        Height = icon.Height,
+                        ImageBytes = System.IO.File.ReadAllBytes(icon.FilePath),
+                        IsUnsupported = true
+                    });
+
+                    continue;
+                }
+                else
+                {
+                    var bmp = new Bitmap(icon.Width, icon.Height);
+
+                    using (var logo = new Bitmap(LogoFilePath))
+                    {
+                        FillBackgroundWithColor(ref bmp, LogoBackgroundColor);
+
+                        if (useSuggestedSize && supportedIconConfig.SuggestedSize > 0)
+                        {
+                            var scaledImage = ScaleImage(logo, supportedIconConfig.SuggestedSize, supportedIconConfig.SuggestedSize);
+                            var percent = supportedIconConfig.SuggestedSize * 100 / bmp.Height;
+
+                            int width = scaledImage.Width;
+                            int height = scaledImage.Height;
+
+                            int x = ((bmp.Width - width) / 2);
+                            int y = ((bmp.Height - height) / 2);
+
+                            CopyRegionIntoImage(logo, new Rectangle(0, 0, logo.Width, logo.Height), ref bmp, new Rectangle(x, y, width, height));
+
+                            previewIcons.Add(new IconFileViewModel()
+                            {
+                                Width = icon.Width,
+                                Height = icon.Height,
+                                ImageBytes = ImageToByte(bmp),
+                                FileName = icon.FileName
+                            });
+                        }
+                        else // use slider values
+                        {
+                            var percent = icon.FileName.Contains("launcher") ? launcherSizePercent : iconSizePercent;
+
+                            int sliderSize = (int)((bmp.Height / 100.0f) * percent);
+                            var scaledImage2 = ScaleImage(logo, sliderSize, sliderSize);
+
+                            int width = scaledImage2.Width;
+                            int height = scaledImage2.Height;
+
+                            int x = ((bmp.Width - width) / 2);
+                            int y = ((bmp.Height - height) / 2);
+
+                            CopyRegionIntoImage(logo, new Rectangle(0, 0, logo.Width, logo.Height), ref bmp, new Rectangle(x, y, width, height));
+
+                            previewIcons.Add(new IconFileViewModel()
+                            {
+                                Width = icon.Width,
+                                Height = icon.Height,
+                                ImageBytes = ImageToByte(bmp),
+                                FileName = icon.FileName
+                            });
+                        }
+                    }
+
+
+                }
+
             }
         }
 

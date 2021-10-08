@@ -7,6 +7,9 @@
         xmlns:viewModels="clr-namespace:XamarinAppIconsBuilder.ViewModels"
         mc:Ignorable="d"
         Title="Xamarin App Icons Builder" Height="450" Width="1000">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <Grid>
         <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid Margin="10,10,10,10">
@@ -103,6 +106,7 @@
                                             <StackPanel>
                                                 <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
                                                     <Image Source="{Binding ImageBytes}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                    <Label Content="Unsupported" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsUnsupported, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                                 </Grid>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <Label Content="{Binding Width}" Margin="0" Padding="0"/>
@@ -122,11 +126,11 @@
                             <Label Content="Icon" Padding="10,0,5,0" Background="White"/>
                             <Label Content="{Binding IconSizePercentAndroid}" Padding="0,0,0,0" Background="White"/>
                             <Label Content="%" Padding="0,0,5,0" Background="White"/>
-                            <Slider Width="120" Maximum="100" Minimum="10" SmallChange="1" Value="{Binding IconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
+                            <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding IconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
                             <Label Content="Launcher" Padding="10,0,5,0" Background="White"/>
                             <Label Content="{Binding LauncherIconSizePercentAndroid}" Padding="0,0,0,0" Background="White"/>
                             <Label Content="%" Padding="0,0,5,0" Background="White"/>
-                            <Slider Width="120" Maximum="100" Minimum="10" SmallChange="1" Value="{Binding LauncherIconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
+                            <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding LauncherIconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
                         </StackPanel>
                     </Grid>
                     <Grid>
@@ -175,6 +179,7 @@
                                             <StackPanel>
                                                 <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
                                                     <Image Source="{Binding ImageBytes}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                    <Label Content="Unsupported" Background="White" FontWeight="Bold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsUnsupported, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                                 </Grid>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <Label Content="{Binding Width}" Margin="0" Padding="0"/>
@@ -189,6 +194,18 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </GroupBox>
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
+                            <CheckBox Background="White" Content="Use suggested size" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding UseSuggestedSizeIos}"/>
+                            <Label Content="Icon" Padding="10,0,5,0" Background="White"/>
+                            <Label Content="{Binding IconSizePercentIos}" Padding="0,0,0,0" Background="White"/>
+                            <Label Content="%" Padding="0,0,5,0" Background="White"/>
+                            <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding IconSizePercentIos}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledIos}" />
+                            <!--<Label Content="Launcher" Padding="10,0,5,0" Background="White"/>
+                            <Label Content="{Binding LauncherIconSizePercentIos}" Padding="0,0,0,0" Background="White"/>
+                            <Label Content="%" Padding="0,0,5,0" Background="White"/>
+                            <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding LauncherIconSizePercentIos}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledIos}" />-->
+                        </StackPanel>
+
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
