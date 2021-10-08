@@ -232,6 +232,47 @@ namespace XamarinAppIconsBuilder.ViewModels
             }
         }
 
+        bool _UseSuggestedSizeWindowsUniversal;
+        public bool UseSuggestedSizeWindowsUniversal
+        {
+            get { return _UseSuggestedSizeWindowsUniversal; }
+            set
+            {
+                if (_UseSuggestedSizeWindowsUniversal != value)
+                {
+                    _UseSuggestedSizeWindowsUniversal = value;
+                    OnPropertyChanged(nameof(UseSuggestedSizeWindowsUniversal));
+                    SizeSliderEnabledWindowsUniversal = !value;
+                }
+            }
+        }
+        bool _SizeSliderEnabledWindowsUniversal;
+        public bool SizeSliderEnabledWindowsUniversal
+        {
+            get { return _SizeSliderEnabledWindowsUniversal; }
+            set
+            {
+                if (_SizeSliderEnabledWindowsUniversal != value)
+                {
+                    _SizeSliderEnabledWindowsUniversal = value;
+                    OnPropertyChanged(nameof(SizeSliderEnabledWindowsUniversal));
+                }
+            }
+        }
+        int _IconSizePercentWindowsUniversal = 78;
+        public int IconSizePercentWindowsUniversal
+        {
+            get { return _IconSizePercentWindowsUniversal; }
+            set
+            {
+                if (_IconSizePercentWindowsUniversal != value)
+                {
+                    _IconSizePercentWindowsUniversal = value;
+                    OnPropertyChanged(nameof(IconSizePercentWindowsUniversal));
+                }
+            }
+        }
+
 
 
         private List<SupportedIconItemModel> _supportedIconsIos;
@@ -242,6 +283,7 @@ namespace XamarinAppIconsBuilder.ViewModels
         {
             UseSuggestedSizeAndroid = true;
             UseSuggestedSizeIos = true;
+            UseSuggestedSizeWindowsUniversal = true;
 
             Task.Run(() =>
             {
@@ -288,7 +330,7 @@ namespace XamarinAppIconsBuilder.ViewModels
                 {
                     _BrowseXamarinSolutionCommand = new RelayCommand(async param =>
                     {
-                        LogoFilePath = @"U:\SOFTWARE\HackerspaceApp\resources\logo_transparent_for_icons.png";
+                        //LogoFilePath = @"U:\SOFTWARE\HackerspaceApp\resources\logo_transparent_for_icons.png";
 
                         FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
 
@@ -297,19 +339,11 @@ namespace XamarinAppIconsBuilder.ViewModels
                         {
                             XamarinSolutionPath = folderBrowserDialog1.SelectedPath;
 
-                            var scanner = new XamarinSolutionScanner(XamarinSolutionPath);
+                            ScanAndroidIcons();
 
-                            var iosIcons = await scanner.GetIosIcons();
+                            ScanIosIcons();
 
-                            IosIcons = new ObservableCollection<IconFileViewModel>(iosIcons.Select(z => new IconFileViewModel(z)));
-
-                            var androidIcons = await scanner.GetAndroidIcons();
-
-                            AndroidIcons = new ObservableCollection<IconFileViewModel>(androidIcons.Select(z => new IconFileViewModel(z)));
-
-                            var windowsUniversalIcons = await scanner.GetWindowsUniversalIcons();
-
-                            WindowsUniversalIcons = new ObservableCollection<IconFileViewModel>(windowsUniversalIcons.Select(z => new IconFileViewModel(z)));
+                            ScanWindowsUniversalIcons();
                         }
 
 
@@ -320,6 +354,30 @@ namespace XamarinAppIconsBuilder.ViewModels
             }
         }
 
+        private async Task ScanAndroidIcons()
+        {
+            var scanner = new XamarinSolutionScanner(XamarinSolutionPath);
+
+            var androidIcons = await scanner.GetAndroidIcons();
+
+            AndroidIcons = new ObservableCollection<IconFileViewModel>(androidIcons.Select(z => new IconFileViewModel(z)));
+        }
+        private async Task ScanIosIcons()
+        {
+            var scanner = new XamarinSolutionScanner(XamarinSolutionPath);
+
+            var iosIcons = await scanner.GetIosIcons();
+
+            IosIcons = new ObservableCollection<IconFileViewModel>(iosIcons.Select(z => new IconFileViewModel(z)));
+        }
+        private async Task ScanWindowsUniversalIcons()
+        {
+            var scanner = new XamarinSolutionScanner(XamarinSolutionPath);
+
+            var windowsUniversalIcons = await scanner.GetWindowsUniversalIcons();
+
+            WindowsUniversalIcons = new ObservableCollection<IconFileViewModel>(windowsUniversalIcons.Select(z => new IconFileViewModel(z)));
+        }
 
         RelayCommand _GenerateIconsCommand;
         public ICommand GenerateIconsCommand
@@ -328,8 +386,14 @@ namespace XamarinAppIconsBuilder.ViewModels
             {
                 if (_GenerateIconsCommand == null)
                 {
-                    _GenerateIconsCommand = new RelayCommand(param =>
+                    _GenerateIconsCommand = new RelayCommand(async param =>
                     {
+                        if (string.IsNullOrWhiteSpace(LogoFilePath))
+                        {
+                            MessageBox.Show("pick a logo image");
+                            return;
+                        }
+
                         if (AndroidIcons != null)
                         {
                             PreviewAndroidIcons = new ObservableCollection<IconFileViewModel>();
@@ -343,23 +407,20 @@ namespace XamarinAppIconsBuilder.ViewModels
                             this.GenerateIcons(IosIcons, _supportedIconsIos, PreviewIosIcons, UseSuggestedSizeIos, IconSizePercentIos, IconSizePercentIos);
                         }
 
-                        // save to disk
-                        //string outputPath = Guid.NewGuid().ToString();
-                        //Directory.CreateDirectory(outputPath);
-                        //foreach (var item in PreviewAndroidIcons)
-                        //{
-                        //    if (!item.IsUnsupported && !string.IsNullOrWhiteSpace(item.FilePath))
-                        //    {
-                        //        System.IO.File.WriteAllBytes($"{outputPath}\\{item.FileName}", item.ImageBytes);
-                        //    }
-                        //}
+                        if (WindowsUniversalIcons != null)
+                        {
+                            PreviewWindowsUniversalIcons = new ObservableCollection<IconFileViewModel>();
+                            this.GenerateIcons(WindowsUniversalIcons, _supportedIconsWindowsUniversal, PreviewWindowsUniversalIcons, UseSuggestedSizeWindowsUniversal, IconSizePercentWindowsUniversal, IconSizePercentWindowsUniversal);
+                        }
+
+
 
                     }, param => true);
                 }
                 return _GenerateIconsCommand;
             }
         }
-        private void GenerateIcons(ObservableCollection<IconFileViewModel> icons, List<SupportedIconItemModel> supportedIcons, ObservableCollection<IconFileViewModel> previewIcons, bool useSuggestedSize, int iconSizePercent, int launcherSizePercent)
+        private async Task GenerateIcons(ObservableCollection<IconFileViewModel> icons, List<SupportedIconItemModel> supportedIcons, ObservableCollection<IconFileViewModel> previewIcons, bool useSuggestedSize, int iconSizePercent, int launcherSizePercent)
         {
             foreach (var icon in icons)
             {
@@ -403,7 +464,8 @@ namespace XamarinAppIconsBuilder.ViewModels
                                 Width = icon.Width,
                                 Height = icon.Height,
                                 ImageBytes = ImageToByte(bmp),
-                                FileName = icon.FileName
+                                FileName = icon.FileName,
+                                FilePath = icon.FilePath
                             });
                         }
                         else // use slider values
@@ -426,7 +488,8 @@ namespace XamarinAppIconsBuilder.ViewModels
                                 Width = icon.Width,
                                 Height = icon.Height,
                                 ImageBytes = ImageToByte(bmp),
-                                FileName = icon.FileName
+                                FileName = icon.FileName,
+                                FilePath = icon.FilePath
                             });
                         }
                     }
@@ -436,6 +499,83 @@ namespace XamarinAppIconsBuilder.ViewModels
 
             }
         }
+
+
+        RelayCommand _SaveAndroidIconsCommand;
+        public ICommand SaveAndroidIconsCommand
+        {
+            get
+            {
+                if (_SaveAndroidIconsCommand == null)
+                {
+                    _SaveAndroidIconsCommand = new RelayCommand(param =>
+                    {
+                        // save to disk
+                        foreach (var item in PreviewAndroidIcons)
+                        {
+                            if (!item.IsUnsupported && !string.IsNullOrWhiteSpace(item.FilePath))
+                            {
+                                System.IO.File.WriteAllBytes(item.FilePath, item.ImageBytes);
+                            }
+                        }
+                        ScanAndroidIcons();
+
+                    }, param => true);
+                }
+                return _SaveAndroidIconsCommand;
+            }
+        }
+
+        RelayCommand _SaveIosIconsCommand;
+        public ICommand SaveIosIconsCommand
+        {
+            get
+            {
+                if (_SaveIosIconsCommand == null)
+                {
+                    _SaveIosIconsCommand = new RelayCommand(param =>
+                    {
+                        // save to disk
+                        foreach (var item in PreviewIosIcons)
+                        {
+                            if (!item.IsUnsupported && !string.IsNullOrWhiteSpace(item.FilePath))
+                            {
+                                System.IO.File.WriteAllBytes(item.FilePath, item.ImageBytes);
+                            }
+                        }
+                        ScanIosIcons();
+
+                    }, param => true);
+                }
+                return _SaveIosIconsCommand;
+            }
+        }
+
+        RelayCommand _SaveWindowsUniversalIconsCommand;
+        public ICommand SaveWindowsUniversalIconsCommand
+        {
+            get
+            {
+                if (_SaveWindowsUniversalIconsCommand == null)
+                {
+                    _SaveWindowsUniversalIconsCommand = new RelayCommand(param =>
+                    {
+                        // save to disk
+                        foreach (var item in PreviewWindowsUniversalIcons)
+                        {
+                            if (!item.IsUnsupported && !string.IsNullOrWhiteSpace(item.FilePath))
+                            {
+                                System.IO.File.WriteAllBytes(item.FilePath, item.ImageBytes);
+                            }
+                        }
+                        ScanWindowsUniversalIcons();
+
+                    }, param => true);
+                }
+                return _SaveWindowsUniversalIconsCommand;
+            }
+        }
+
 
         public Image ScaleImage(Image image, int maxWidth, int maxHeight)
         {

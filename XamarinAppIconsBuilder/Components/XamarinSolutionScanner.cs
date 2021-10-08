@@ -44,6 +44,7 @@ namespace XamarinAppIconsBuilder.Components
             {
                 var assetsFolders = Directory.GetDirectories(_xamarinSolutionRootPath, "*Assets*", SearchOption.AllDirectories)
                 .Where(z => !z.Contains("\\obj\\"))
+                .Where(z => !z.Contains("\\bin\\"))
                 .Where(z=>z.Contains(".UWP"))
                 .ToArray();
 
@@ -66,7 +67,8 @@ namespace XamarinAppIconsBuilder.Components
             return await Task.Run(async () =>
             {
                 var assetsFolders = Directory.GetDirectories(_xamarinSolutionRootPath, "*AppIcon.appiconset*", SearchOption.AllDirectories)
-                .Where(z => !z.Contains("\\obj\\"));
+                .Where(z => !z.Contains("\\obj\\"))
+                .Where(z => !z.Contains(".macOS\\"));
 
                 List<string> icons = new List<string>();
 

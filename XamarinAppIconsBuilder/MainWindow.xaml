@@ -6,94 +6,50 @@
         xmlns:local="clr-namespace:XamarinAppIconsBuilder"
         xmlns:viewModels="clr-namespace:XamarinAppIconsBuilder.ViewModels"
         mc:Ignorable="d"
-        Title="Xamarin App Icons Builder" Height="450" Width="1000">
+        Title="Xamarin App Icons Builder" Height="450" Width="1000" WindowState="Maximized">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
     <Grid>
-        <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid Margin="10,10,10,10">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel>
-                            <GroupBox Header="Logo">
-                                <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                    <TextBox Text="{Binding LogoFilePath}" TextWrapping="NoWrap" Width="400"/>
-                                    <Button Content="browse" Command="{Binding BrowseLogoCommand}"/>
-                                </StackPanel>
-                            </GroupBox>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <GroupBox Header="Background color" Grid.Column="0">
-                                    <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                        <TextBox Text="{Binding LogoBackgroundColor}" TextWrapping="Wrap" Width="80"/>
-                                    </StackPanel>
-                                </GroupBox>
-                                <GroupBox Header="Margin" Grid.Column="1">
-                                    <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                        <TextBox Text="0" TextWrapping="Wrap" Width="80"/>
-                                    </StackPanel>
-                                </GroupBox>
+        <!--<ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
 
-                            </Grid>
-                            <GroupBox Header="Xamarin Solution path">
-                                <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                    <TextBox Text="{Binding XamarinSolutionPath}" TextWrapping="NoWrap" Width="400"/>
-                                    <Button Content="browse" Command="{Binding BrowseXamarinSolutionCommand}"/>
-                                </StackPanel>
-                            </GroupBox>
-
-                        </StackPanel>
-                        <StackPanel>
-                            <GroupBox Header="Preview Logo">
-                                <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                    <Grid Width="128" Height="128">
-                                        <Rectangle Fill="#FFDADADA"/>
-                                        <Image Source="{Binding LogoFilePath}" Stretch="Uniform"/>
-                                    </Grid>
-                                </StackPanel>
-                            </GroupBox>
-                        </StackPanel>
-
-                    </StackPanel>
-                    <Button Content="Generate Icons" HorizontalAlignment="Stretch" Margin="10,10,10,10" Command="{Binding GenerateIconsCommand}"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <GroupBox Header="Android" Grid.Column="0" Margin="0, 0, 5, 0">
-                            <ItemsControl ItemsSource="{Binding AndroidIcons}" Margin="10">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="5" ToolTip="{Binding FilePath}">
-                                            <StackPanel>
-                                                <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
-                                                    <Image Source="{Binding FilePath}" Height="100" Stretch="Uniform" Margin="2"/>
-                                                    <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Command="{Binding OpenParentFolderCommand}" CommandParameter="{Binding FilePath}"/>
-                                                </Grid>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Label Content="{Binding Width}" Margin="0" Padding="0"/>
-                                                    <Label Content="x" Margin="0" Padding="0"/>
-                                                    <Label Content="{Binding Height}" Margin="0" Padding="0"/>
-                                                    <Label Content=" " Margin="0" Padding="0"/>
-                                                </StackPanel>
-                                                <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+        <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="10,240,10,10" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Android" Grid.Column="0" Margin="0, 0, 5, 0">
+                        <ItemsControl ItemsSource="{Binding AndroidIcons}" Margin="10">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="5" ToolTip="{Binding FilePath}">
+                                        <StackPanel>
+                                            <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
+                                                <Image Source="{Binding ImageBytes}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Command="{Binding OpenParentFolderCommand}" CommandParameter="{Binding FilePath}"/>
+                                            </Grid>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Label Content="{Binding Width}" Margin="0" Padding="0"/>
+                                                <Label Content="x" Margin="0" Padding="0"/>
+                                                <Label Content="{Binding Height}" Margin="0" Padding="0"/>
+                                                <Label Content=" " Margin="0" Padding="0"/>
                                             </StackPanel>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </GroupBox>
-                        <GroupBox Header="Preview Android" Grid.Column="1" Margin="5, 0, 0, 0">
+                                            <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </GroupBox>
+                    <GroupBox Header="Preview Android" Grid.Column="1" Margin="5, 0, 0, 0">
+                        <StackPanel>
                             <ItemsControl ItemsSource="{Binding PreviewAndroidIcons}" Margin="10">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -120,53 +76,56 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                        </GroupBox>
-                        <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
-                            <CheckBox Background="White" Content="Use suggested size" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding UseSuggestedSizeAndroid}"/>
-                            <Label Content="Icon" Padding="10,0,5,0" Background="White"/>
-                            <Label Content="{Binding IconSizePercentAndroid}" Padding="0,0,0,0" Background="White"/>
-                            <Label Content="%" Padding="0,0,5,0" Background="White"/>
-                            <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding IconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
-                            <Label Content="Launcher" Padding="10,0,5,0" Background="White"/>
-                            <Label Content="{Binding LauncherIconSizePercentAndroid}" Padding="0,0,0,0" Background="White"/>
-                            <Label Content="%" Padding="0,0,5,0" Background="White"/>
-                            <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding LauncherIconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
+                            <Button Content="Save and overwrite Icons for Android" HorizontalAlignment="Left" Padding="10, 0, 10, 0" Command="{Binding SaveAndroidIconsCommand}"/>
                         </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <GroupBox Header="iOS" Grid.Column="0" Margin="0, 0, 5, 0">
-                            <ItemsControl ItemsSource="{Binding IosIcons}" Margin="10">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="5" ToolTip="{Binding FilePath}">
-                                            <StackPanel>
-                                                <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
-                                                    <Image Source="{Binding FilePath}" Height="100" Stretch="Uniform" Margin="2"/>
-                                                    <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Command="{Binding OpenParentFolderCommand}" CommandParameter="{Binding FilePath}"/>
-                                                </Grid>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Label Content="{Binding Width}" Margin="0" Padding="0"/>
-                                                    <Label Content="x" Margin="0" Padding="0"/>
-                                                    <Label Content="{Binding Height}" Margin="0" Padding="0"/>
-                                                    <Label Content=" " Margin="0" Padding="0"/>
-                                                </StackPanel>
-                                                <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                    </GroupBox>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
+                        <CheckBox Background="White" Content="Use suggested size" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding UseSuggestedSizeAndroid}"/>
+                        <Label Content="Icon" Padding="10,0,5,0" Background="White"/>
+                        <Label Content="{Binding IconSizePercentAndroid}" Padding="0,0,0,0" Background="White"/>
+                        <Label Content="%" Padding="0,0,5,0" Background="White"/>
+                        <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding IconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
+                        <Label Content="Launcher" Padding="10,0,5,0" Background="White"/>
+                        <Label Content="{Binding LauncherIconSizePercentAndroid}" Padding="0,0,0,0" Background="White"/>
+                        <Label Content="%" Padding="0,0,5,0" Background="White"/>
+                        <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding LauncherIconSizePercentAndroid}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledAndroid}" />
+                    </StackPanel>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="iOS" Grid.Column="0" Margin="0, 0, 5, 0">
+                        <ItemsControl ItemsSource="{Binding IosIcons}" Margin="10">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="5" ToolTip="{Binding FilePath}">
+                                        <StackPanel>
+                                            <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
+                                                <Image Source="{Binding ImageBytes}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Command="{Binding OpenParentFolderCommand}" CommandParameter="{Binding FilePath}"/>
+                                            </Grid>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Label Content="{Binding Width}" Margin="0" Padding="0"/>
+                                                <Label Content="x" Margin="0" Padding="0"/>
+                                                <Label Content="{Binding Height}" Margin="0" Padding="0"/>
+                                                <Label Content=" " Margin="0" Padding="0"/>
                                             </StackPanel>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </GroupBox>
-                        <GroupBox Header="Preview iOS" Grid.Column="1" Margin="5, 0, 0, 0">
+                                            <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </GroupBox>
+                    <GroupBox Header="Preview iOS" Grid.Column="1" Margin="5, 0, 0, 0">
+                        <StackPanel>
                             <ItemsControl ItemsSource="{Binding PreviewIosIcons}" Margin="10">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -193,54 +152,57 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                        </GroupBox>
-                        <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
-                            <CheckBox Background="White" Content="Use suggested size" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding UseSuggestedSizeIos}"/>
-                            <Label Content="Icon" Padding="10,0,5,0" Background="White"/>
-                            <Label Content="{Binding IconSizePercentIos}" Padding="0,0,0,0" Background="White"/>
-                            <Label Content="%" Padding="0,0,5,0" Background="White"/>
-                            <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding IconSizePercentIos}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledIos}" />
-                            <!--<Label Content="Launcher" Padding="10,0,5,0" Background="White"/>
+                            <Button Content="Save and overwrite Icons for iOS" HorizontalAlignment="Left" Padding="10, 0, 10, 0" Command="{Binding SaveIosIconsCommand}"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
+                        <CheckBox Background="White" Content="Use suggested size" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding UseSuggestedSizeIos}"/>
+                        <Label Content="Icon" Padding="10,0,5,0" Background="White"/>
+                        <Label Content="{Binding IconSizePercentIos}" Padding="0,0,0,0" Background="White"/>
+                        <Label Content="%" Padding="0,0,5,0" Background="White"/>
+                        <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding IconSizePercentIos}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledIos}" />
+                        <!--<Label Content="Launcher" Padding="10,0,5,0" Background="White"/>
                             <Label Content="{Binding LauncherIconSizePercentIos}" Padding="0,0,0,0" Background="White"/>
                             <Label Content="%" Padding="0,0,5,0" Background="White"/>
                             <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding LauncherIconSizePercentIos}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledIos}" />-->
-                        </StackPanel>
+                    </StackPanel>
 
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <GroupBox Header="Windows Universal" Grid.Column="0" Margin="0, 0, 5, 0">
-                            <ItemsControl ItemsSource="{Binding WindowsUniversalIcons}" Margin="10">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="5" ToolTip="{Binding FilePath}">
-                                            <StackPanel>
-                                                <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
-                                                    <Image Source="{Binding FilePath}" Height="100" Stretch="Uniform" Margin="2"/>
-                                                    <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Command="{Binding OpenParentFolderCommand}" CommandParameter="{Binding FilePath}"/>
-                                                </Grid>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Label Content="{Binding Width}" Margin="0" Padding="0"/>
-                                                    <Label Content="x" Margin="0" Padding="0"/>
-                                                    <Label Content="{Binding Height}" Margin="0" Padding="0"/>
-                                                    <Label Content=" " Margin="0" Padding="0"/>
-                                                </StackPanel>
-                                                <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Windows Universal" Grid.Column="0" Margin="0, 0, 5, 0">
+                        <ItemsControl ItemsSource="{Binding WindowsUniversalIcons}" Margin="10">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="5" ToolTip="{Binding FilePath}">
+                                        <StackPanel>
+                                            <Grid Margin="3" Background="LightGray" HorizontalAlignment="Center">
+                                                <Image Source="{Binding ImageBytes}" Height="100" Stretch="Uniform" Margin="2"/>
+                                                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Command="{Binding OpenParentFolderCommand}" CommandParameter="{Binding FilePath}"/>
+                                            </Grid>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Label Content="{Binding Width}" Margin="0" Padding="0"/>
+                                                <Label Content="x" Margin="0" Padding="0"/>
+                                                <Label Content="{Binding Height}" Margin="0" Padding="0"/>
+                                                <Label Content=" " Margin="0" Padding="0"/>
                                             </StackPanel>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </GroupBox>
-                        <GroupBox Header="Preview Windows Universal" Grid.Column="1" Margin="5, 0, 0, 0">
+                                            <Label Content="{Binding FileName}" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </GroupBox>
+                    <GroupBox Header="Preview Windows Universal" Grid.Column="1" Margin="5, 0, 0, 0">
+                        <StackPanel>
                             <ItemsControl ItemsSource="{Binding PreviewWindowsUniversalIcons}" Margin="10">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -266,14 +228,83 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
+                            <Button Content="Save and overwrite Icons for Windows Universal" HorizontalAlignment="Left" Padding="10, 0, 10, 0" Command="{Binding SaveWindowsUniversalIconsCommand}"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
+                        <CheckBox Background="White" Content="Use suggested size" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding UseSuggestedSizeWindowsUniversal}"/>
+                        <Label Content="Icon" Padding="10,0,5,0" Background="White"/>
+                        <Label Content="{Binding IconSizePercentWindowsUniversal}" Padding="0,0,0,0" Background="White"/>
+                        <Label Content="%" Padding="0,0,5,0" Background="White"/>
+                        <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding IconSizePercentWindowsUniversal}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledWindowsUniversal}" />
+                        <!--<Label Content="Launcher" Padding="10,0,5,0" Background="White"/>
+                            <Label Content="{Binding LauncherIconSizePercentWindowsUniversal}" Padding="0,0,0,0" Background="White"/>
+                            <Label Content="%" Padding="0,0,5,0" Background="White"/>
+                            <Slider Width="120" Maximum="200" Minimum="10" SmallChange="1" Value="{Binding LauncherIconSizePercentWindowsUniversal}" AutoToolTipPlacement="TopLeft" IsEnabled="{Binding SizeSliderEnabledWindowsUniversal}" />-->
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+
+
+        <Grid Margin="10,10,10,10">
+            <StackPanel VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <GroupBox Header="Logo">
+                            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                                <TextBox Text="{Binding LogoFilePath}" TextWrapping="NoWrap" Width="400"/>
+                                <Button Content="browse" Command="{Binding BrowseLogoCommand}"/>
+                            </StackPanel>
                         </GroupBox>
-                    </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <GroupBox Header="Background color" Grid.Column="0">
+                                <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                                    <TextBox Text="{Binding LogoBackgroundColor}" TextWrapping="Wrap" Width="80"/>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="Margin" Grid.Column="1">
+                                <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                                    <TextBox Text="0" TextWrapping="Wrap" Width="80"/>
+                                </StackPanel>
+                            </GroupBox>
+
+                        </Grid>
+                        <GroupBox Header="Xamarin Solution path">
+                            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                                <TextBox Text="{Binding XamarinSolutionPath}" TextWrapping="NoWrap" Width="400"/>
+                                <Button Content="browse" Command="{Binding BrowseXamarinSolutionCommand}"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                    </StackPanel>
+                    <StackPanel>
+                        <GroupBox Header="Selected Logo Preview" Margin="10, 0, 0, 0">
+                            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                                <Grid Width="128" Height="128">
+                                    <Rectangle Fill="#FFDADADA"/>
+                                    <Image Source="{Binding LogoFilePath}" Stretch="Uniform"/>
+                                </Grid>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
 
                 </StackPanel>
+                <Button Content="Preview new Icons" HorizontalAlignment="Stretch" Margin="10,10,10,10" Command="{Binding GenerateIconsCommand}"/>
 
-            </Grid>
+            </StackPanel>
 
-        </ScrollViewer>
+
+
+        </Grid>
+
+
+
+        <!--</ScrollViewer>-->
 
     </Grid>
 </Window>

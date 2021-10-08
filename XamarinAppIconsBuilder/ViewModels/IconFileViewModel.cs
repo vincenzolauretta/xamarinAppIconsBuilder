@@ -103,12 +103,23 @@ namespace XamarinAppIconsBuilder.ViewModels
 
             FileName = System.IO.Path.GetFileName(FilePath);
 
-            GetFileInfo();
+            LoadFileInfo();
+
         }
 
-        async Task GetFileInfo()
+        async Task LoadFileInfo()
         {
             await ReadPngImageSize(FilePath);
+
+            await LoadImageBytes();
+        }
+
+        async Task LoadImageBytes()
+        {
+            await Task.Run(() =>
+            {
+                ImageBytes = System.IO.File.ReadAllBytes(FilePath);
+            });
         }
 
         public async Task ReadPngImageSize(string Filename)
