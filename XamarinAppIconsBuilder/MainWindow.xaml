@@ -76,7 +76,13 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                            <Button Content="Save and overwrite Icons for Android" HorizontalAlignment="Left" Padding="10, 0, 10, 0" Command="{Binding SaveAndroidIconsCommand}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid Width="20" Height="20" Margin="0, 0, 5, 0">
+                                    <Rectangle Fill="White" Stroke="Red" StrokeThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10"/>
+                                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Padding="0" Content="5" Foreground="Red" FontWeight="Bold"/>
+                                </Grid>
+                                           <Button Content="Save and overwrite Icons for Android" HorizontalAlignment="Left" Padding="10, 0, 10, 0" Command="{Binding SaveAndroidIconsCommand}"/>
+             </StackPanel>
                         </StackPanel>
                     </GroupBox>
                     <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
@@ -152,7 +158,13 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                            <Button Content="Save and overwrite Icons for iOS" HorizontalAlignment="Left" Padding="10, 0, 10, 0" Command="{Binding SaveIosIconsCommand}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid Width="20" Height="20" Margin="0, 0, 5, 0">
+                                    <Rectangle Fill="White" Stroke="Red" StrokeThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10"/>
+                                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Padding="0" Content="5" Foreground="Red" FontWeight="Bold"/>
+                                </Grid>
+                                                      <Button Content="Save and overwrite Icons for iOS" HorizontalAlignment="Left" Padding="10, 0, 10, 0" Command="{Binding SaveIosIconsCommand}"/>
+  </StackPanel>
                         </StackPanel>
                     </GroupBox>
                     <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
@@ -228,7 +240,13 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                            <Button Content="Save and overwrite Icons for Windows Universal" HorizontalAlignment="Left" Padding="10, 0, 10, 0" Command="{Binding SaveWindowsUniversalIconsCommand}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid Width="20" Height="20" Margin="0, 0, 5, 0">
+                                    <Rectangle Fill="White" Stroke="Red" StrokeThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10"/>
+                                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Padding="0" Content="5" Foreground="Red" FontWeight="Bold"/>
+                                </Grid>
+                                               <Button Content="Save and overwrite Icons for Windows Universal" HorizontalAlignment="Left" Padding="10, 0, 10, 0" Command="{Binding SaveWindowsUniversalIconsCommand}"/>
+         </StackPanel>
                         </StackPanel>
                     </GroupBox>
                     <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,1,0,0">
@@ -251,35 +269,43 @@
             <StackPanel VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
+                        <GroupBox Header="Xamarin Solution path">
+                            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                                <Grid Width="20" Height="20" Margin="0, 0, 5, 0">
+                                    <Rectangle Fill="White" Stroke="Red" StrokeThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10"/>
+                                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Padding="0" Content="1" Foreground="Red" FontWeight="Bold"/>
+                                </Grid>
+                                <TextBox Text="{Binding XamarinSolutionPath}" TextWrapping="NoWrap" Width="400"/>
+                                <Button Content="browse" Command="{Binding BrowseXamarinSolutionCommand}"/>
+                            </StackPanel>
+                        </GroupBox>
                         <GroupBox Header="Logo">
                             <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                <TextBox Text="{Binding LogoFilePath}" TextWrapping="NoWrap" Width="400"/>
+                                <Grid Width="20" Height="20" Margin="0, 0, 5, 0">
+                                    <Rectangle Fill="White" Stroke="Red" StrokeThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10"/>
+                                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Padding="0" Content="2" Foreground="Red" FontWeight="Bold"/>
+                                </Grid>
+                                    <TextBox Text="{Binding LogoFilePath}" TextWrapping="NoWrap" Width="400"/>
                                 <Button Content="browse" Command="{Binding BrowseLogoCommand}"/>
                             </StackPanel>
                         </GroupBox>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
-                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <GroupBox Header="Background color" Grid.Column="0">
                                 <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                                    <Grid Width="20" Height="20" Margin="0, 0, 5, 0">
+                                        <Rectangle Fill="White" Stroke="Red" StrokeThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10"/>
+                                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Padding="0" Content="3" Foreground="Red" FontWeight="Bold"/>
+                                    </Grid>
                                     <TextBox Text="{Binding LogoBackgroundColor}" TextWrapping="Wrap" Width="80"/>
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="Margin" Grid.Column="1">
-                                <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                    <TextBox Text="0" TextWrapping="Wrap" Width="80"/>
-                                </StackPanel>
-                            </GroupBox>
+
 
                         </Grid>
-                        <GroupBox Header="Xamarin Solution path">
-                            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                <TextBox Text="{Binding XamarinSolutionPath}" TextWrapping="NoWrap" Width="400"/>
-                                <Button Content="browse" Command="{Binding BrowseXamarinSolutionCommand}"/>
-                            </StackPanel>
-                        </GroupBox>
+
 
                     </StackPanel>
                     <StackPanel>
@@ -294,7 +320,14 @@
                     </StackPanel>
 
                 </StackPanel>
-                <Button Content="Preview new Icons" HorizontalAlignment="Stretch" Margin="10,10,10,10" Command="{Binding GenerateIconsCommand}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Grid Width="20" Height="20" Margin="0, 0, 5, 0">
+                        <Rectangle Fill="White" Stroke="Red" StrokeThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10"/>
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Padding="0" Content="4" Foreground="Red" FontWeight="Bold"/>
+                    </Grid>
+                        <Button Content="Preview new Icons" HorizontalAlignment="Stretch" Margin="0,10,10,10" Padding="10, 0, 10, 0" Command="{Binding GenerateIconsCommand}"/>
+        </StackPanel>
+                            
 
             </StackPanel>
 
