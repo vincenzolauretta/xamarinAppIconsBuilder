@@ -1,4 +1,4 @@
 # xamarinAppIconsBuilder
-Creates all icons for Xamarin Apps (iOS/Android)
+Creates all icons for Xamarin Apps (iOS/Android/UWP)
 
-currently work in progress
+fully working beta
